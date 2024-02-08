@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>Venn Diagram Generator</title>
+</head>
+
+<body>
+    <script src="set.js"></script>
+    <script src="main.js"></script>
+    <div class="parent">
+        <div class="box1 child">
+            <h2>Venn Diagram Generator</h2>
+            <table>
+                <tr>
+                    <th>Operation</th>
+                    <th>Symbol</th>
+                    <th>Translation</th>
+                </tr>
+                <tr>
+                    <td>Union</td>
+                    <td>∪</td>
+                    <td>Ampersand: &</td>
+                </tr>
+                <tr>
+                    <td>Intersection</td>
+                    <td>∩</td>
+                    <td>Pipe: |</td>
+                </tr>
+                <tr>
+                    <td>Difference</td>
+                    <td>∖ —</td>
+                    <td>Hyphen: -</td>
+                </tr>
+                <tr>
+                    <td>Symmetric Difference</td>
+                    <td>⊕ ∆</td>
+                    <td>Asterisk: *</td>
+                </tr>
+            </table>
+            <p>Examples:</p>
+            <ul>
+                <li>A&B</li>
+                <li>C*A-B</li>
+                <li>A|(B*C)</li>
+                <li>(A|B)*(A&C)</li>
+            </ul>
+            <input id="expression_input" type="text" placeholder="Enter set expression" oninput="inputHandler()">
+        </div>
+        <br />
+        <div class="box2 child">
+            <object id="venn" class="svg" data="venn.svg" type="image/svg+xml"></object>
+        </div>
+    </div>
+</body>
+
+</html>
