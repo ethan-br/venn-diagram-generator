@@ -53,6 +53,28 @@ function hasParentheses(string) {
 }
 
 /**
+ * Counts number of parentheses pairs in a string.
+ * @param {string} string
+ */
+function countParenthesesPairs(string) {
+	let pairsCount = 0;
+	let openCount = 0;
+	for (let i = 0; i < string.length; i++) {
+		if (string[i] === "(") {
+			openCount++;
+		} else if (string[i] === ")") {
+			if (openCount > 0) {
+				pairsCount++;
+				openCount--;
+			} else {
+				console.log("Error: Unmatched closing parenthesis at index " + i);
+			}
+		}
+	}
+	return pairsCount;
+}
+
+/**
  * Separates highest depth operation into an array.
  * @param  {string}   expr
  * @return {stringArray} operation
@@ -68,7 +90,7 @@ function findOperation(expr) {
 		} else {
 			if (stack.length === 0 && OPERATORS.includes(expr[i])) {
 				// Not in paretheses scope and operator is found
-                console.log("Operation found:", [expr.slice(0, i), expr[i], expr.slice(i + 1)]);
+				console.log("Operation found:", [expr.slice(0, i), expr[i], expr.slice(i + 1)]);
 				return [expr.slice(0, i), expr[i], expr.slice(i + 1)]; // operand1, operator, operand2
 			}
 		}
@@ -83,7 +105,7 @@ function findOperation(expr) {
  * @param {string} operand2
  */
 function translateOperation(operand1, operator, operand2) {
-    console.log("Translating:", [operand1, operator, operand2])
+	console.log("Translating:", [operand1, operator, operand2]);
 	// Concatenate with correct Set() method
 	if (operator === "&") {
 		return `${operand1}.union[${operand2}]`;
@@ -104,30 +126,34 @@ function translateOperation(operand1, operator, operand2) {
  */
 function processExpr(expr) {
 	expr = expr.replace(/\s+/g, ""); // Remove whitespace
-    console.log("Processing:", expr)
+	console.log("Processing:", expr);
 	if (hasParentheses(expr)) {
 		if (hasBalancedParentheses(expr)) {
 			console.log("If Case");
-			[ operand1, operator, operand2 ] = findOperation(expr); // Separate operation
-            console.log("Operation:", operand1, operator, operand2);
+			let [operand1, operator, operand2] = findOperation(expr); // Separate operation // this 'let' cost me 6 hours of debugging
+			console.log("Operation:", operand1, operator, operand2);
 			let translatedOperand1;
 			let translatedOperand2;
-			if (hasParentheses(operand1)) {
+            if (countParenthesesPairs(operand1) > 1) {
+                translatedOperand1 = processExpr(operand1);
+            } else if (hasParentheses(operand1)) {
 				console.log("Operand1 has parentheses:", operand1.slice(1, operand1.length - 1));
 				translatedOperand1 = processExpr(operand1.slice(1, operand1.length - 1));
 			} else {
 				translatedOperand1 = operand1;
-            }
-			if (hasParentheses(operand2)) {
+			}
+			if (countParenthesesPairs(operand1) > 1) {
+                translatedOperand2 = processExpr(operand2);
+			} else if (hasParentheses(operand2)) {
 				console.log("Operand2 has parentheses:", operand2.slice(1, operand2.length - 1));
 				translatedOperand2 = processExpr(operand2.slice(1, operand2.length - 1));
 			} else {
 				translatedOperand2 = operand2;
 			}
-            console.log("New operation:", translatedOperand1, operator, translatedOperand2);
+			console.log("New operation:", translatedOperand1, operator, translatedOperand2);
 			return translateOperation(translatedOperand1, operator, translatedOperand2);
 
-            //
+			//
 			// return translateOperation(
 			// 	hasParentheses(operand1)
 			// 		? (console.log(
@@ -151,12 +177,11 @@ function processExpr(expr) {
 		}
 	} else {
 		console.log("Else Case");
-		[ operand1, operator, operand2 ] = findOperation(expr); // Separate operation
+		[operand1, operator, operand2] = findOperation(expr); // Separate operation
 		if (operand2.length > 1) {
 			console.log("Remaining:", operand2.slice(1));
 			return processExpr(
-				translateOperation(operand1, operator, operand2[0]) +
-					operand2.slice(1)
+				translateOperation(operand1, operator, operand2[0]) + operand2.slice(1)
 			);
 		} else {
 			return translateOperation(operand1, operator, operand2);
@@ -170,8 +195,8 @@ function processExpr(expr) {
  * @returns {stringArray} values
  */
 function evaluateOperation(operation_string) {
-    operation_string = operation_string.replaceAll("[", "(");
-    operation_string = operation_string.replaceAll("]", ")");
+	operation_string = operation_string.replaceAll("[", "(");
+	operation_string = operation_string.replaceAll("]", ")");
 	return eval(operation_string + ".values()"); // Get values of JS expression
 }
 
@@ -180,7 +205,7 @@ function evaluateOperation(operation_string) {
  */
 function inputHandler() {
 	resetSVG(); // Start modification with blank slate SVG
-	const expr = document.getElementById("expression_input").value; // Get text expression from textbox 
+	const expr = document.getElementById("expression_input").value; // Get text expression from textbox
 	console.log(expr);
 	updateSVG(evaluateOperation(processExpr(expr))); // Translate text expression, get values, and fill region based on values
 }
@@ -244,19 +269,19 @@ function runTests() {
 		"(A * B) | (C & A) | ((A | B) * (C * A) | (B - C))",
 		"A.symmetricDifference(B).intersection(C.union(A)).intersection(A.union(B).symmetricDifference(C.symmetricDifference(A)).intersection(B.difference(C))"
 	);
-    console.log("#----------END TESTS----------#");
+	console.log("#----------END TESTS----------#");
 }
 
 function test(expr, expected_result) {
 	let result = processExpr(expr);
-    result = result.replaceAll("[", "(");
+	result = result.replaceAll("[", "(");
 	result = result.replaceAll("]", ")");
 	if (result === expected_result) {
 		console.log("----------------Passed!");
 	} else {
 		console.log(`Expected: ${expected_result}`);
 		console.log(`Got: ${result}`);
-        console.log("----------------Failed!");
+		console.log("----------------Failed!");
 	}
 }
 
