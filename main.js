@@ -249,7 +249,7 @@ function runTests() {
 	test("A - (B | C)", "A.difference(B.intersection(C))");
 	console.log("----------------3", "(A & (B | C)) * (C - A)");
 	test(
-		"(A & (B | C)) * (C - A)",
+		"A & (B | C) * (C - A)",
 		"A.union(B.intersection(C)).symmetricDifference(C.difference(A))"
 	);
 	console.log("----------------4", "A & B - C");

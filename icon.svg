@@ -1,0 +1,126 @@
+<svg viewBox="0 0 300 290" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="none" />
+    <defs>
+        <circle id="circle_A" r="85" cy="100" cx="100" />
+        <circle id="circle_B" r="85" cy="100" cx="200" />
+        <circle id="circle_C" r="85" cy="190" cx="150" />
+        <rect id="visible" width="100%" height="100%" />
+
+        <mask id="mask_A">
+            <rect width="100%" height="100%" fill="black" />
+            <use href="#circle_A" fill="white" />
+            <use href="#circle_B" fill="black" />
+            <use href="#circle_C" fill="black" />
+        </mask>
+
+        <mask id="mask_B">
+            <rect width="100%" height="100%" fill="black" />
+            <use href="#circle_B" fill="white" />
+            <use href="#circle_A" fill="black" />
+            <use href="#circle_C" fill="black" />
+        </mask>
+
+        <mask id="mask_C">
+            <rect width="100%" height="100%" fill="black" />
+            <use href="#circle_C" fill="white" />
+            <use href="#circle_A" fill="black" />
+            <use href="#circle_B" fill="black" />
+        </mask>
+
+        <mask id="mask_A_inverse">
+            <rect width="100%" height="100%" fill="white" />
+            <use href="#circle_A" fill="black" />
+            <use href="#circle_B" fill="white" />
+            <use href="#circle_C" fill="white" />
+        </mask>
+
+        <mask id="mask_B_inverse">
+            <rect width="100%" height="100%" fill="white" />
+            <use href="#circle_B" fill="black" />
+            <use href="#circle_A" fill="white" />
+            <use href="#circle_C" fill="white" />
+        </mask>
+
+        <mask id="mask_C_inverse">
+            <rect width="100%" height="100%" fill="white" />
+            <use href="#circle_C" fill="black" />
+            <use href="#circle_A" fill="white" />
+            <use href="#circle_B" fill="white" />
+        </mask>
+
+        <mask id="mask_AB">
+            <rect width="100%" height="100%" fill="black" />
+            <use href="#circle_A" fill="white" mask="url(#mask_A_inverse)" />
+            <use href="#circle_B" fill="white" mask="url(#mask_B_inverse)" />
+            <use href="#circle_C" fill="black" />
+        </mask>
+
+        <mask id="mask_AC">
+            <rect width="100%" height="100%" fill="black" />
+            <use href="#circle_A" fill="white" mask="url(#mask_A_inverse)" />
+            <use href="#circle_C" fill="white" mask="url(#mask_C_inverse)" />
+            <use href="#circle_B" fill="black" />
+        </mask>
+
+        <mask id="mask_BC">
+            <rect width="100%" height="100%" fill="black" />
+            <use href="#circle_B" fill="white" mask="url(#mask_B_inverse)" />
+            <use href="#circle_C" fill="white" mask="url(#mask_C_inverse)" />
+            <use href="#circle_A" fill="black" />
+        </mask>
+
+        <mask id="mask_AB_inverse">
+            <rect width="100%" height="100%" fill="white" />
+            <use href="#circle_A" fill="black" mask="url(#mask_A_inverse)" />
+            <use href="#circle_B" fill="black" mask="url(#mask_B_inverse)" />
+            <use href="#circle_C" fill="white" />
+        </mask>
+
+        <mask id="mask_AC_inverse">
+            <rect width="100%" height="100%" fill="white" />
+            <use href="#circle_A" fill="black" mask="url(#mask_A_inverse)" />
+            <use href="#circle_C" fill="black" mask="url(#mask_C_inverse)" />
+            <use href="#circle_B" fill="white" />
+        </mask>
+
+        <mask id="mask_BC_inverse">
+            <rect width="100%" height="100%" fill="white" />
+            <use href="#circle_B" fill="black" mask="url(#mask_B_inverse)" />
+            <use href="#circle_C" fill="black" mask="url(#mask_C_inverse)" />
+            <use href="#circle_A" fill="white" />
+        </mask>
+
+        <mask id="mask_ABC">
+            <rect width="100%" height="100%" fill="black" />
+            <use href="#circle_A" fill="white" />
+            <use href="#circle_A" fill="black" mask="url(#mask_A)" />
+            <use href="#circle_B" fill="black" mask="url(#mask_B)" />
+            <use href="#circle_C" fill="black" mask="url(#mask_C)" />
+            <use href="#circle_A" fill="black" mask="url(#mask_AB)" />
+            <use href="#circle_B" fill="black" mask="url(#mask_BC)" />
+            <use href="#circle_C" fill="black" mask="url(#mask_AC)" />
+        </mask>
+
+        <mask id="mask_outside">
+            <rect width="100%" height="100%" fill="white" />
+            <use href="#circle_B" fill="black" />
+            <use href="#circle_C" fill="black" />
+            <use href="#circle_A" fill="black" />
+        </mask>
+
+    </defs>
+    <use id="A" class="region" mask="url(#mask_A)" href="#visible" fill="red" />
+    <use id="B" class="region" mask="url(#mask_B)" href="#visible" fill="red" />
+    <use id="C" class="region" mask="url(#mask_C)" href="#visible" fill="red" />
+    <use id="AB" class="region" mask="url(#mask_AB)" href="#visible" fill="none" />
+    <use id="AC" class="region" mask="url(#mask_AC)" href="#visible" fill="none" />
+    <use id="BC" class="region" mask="url(#mask_BC)" href="#visible" fill="none" />
+    <use id="ABC" class="region" mask="url(#mask_ABC)" href="#visible" fill="red" />
+    <use id="outside" class="region" mask="url(#mask_outside)" href="#visible" fill="none" />
+    <use href="#circle_A" stroke-width="1" stroke="black" fill="none" />
+    <use href="#circle_B" stroke-width="1" stroke="black" fill="none" />
+    <use href="#circle_C" stroke-width="1" stroke="black" fill="none" />
+    <text x="70" y="90" font-size="30" font-family="Arial">A</text>
+    <text x="210" y="90" font-size="30" font-family="Arial">B</text>
+    <text x="140" y="230" font-size="30" font-family="Arial">C</text>
+</svg>
